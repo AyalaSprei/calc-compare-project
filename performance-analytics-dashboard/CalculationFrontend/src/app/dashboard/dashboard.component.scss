@@ -1,5 +1,4 @@
 
-// Variables
 $bg: #f7fafc;
 $white: #ffffff;
 $primary: #4361ee;
@@ -36,7 +35,6 @@ $glass-bg: rgba(255, 255, 255, 0.92);
   font-size: 1.1rem;
   max-width: 600px;
 
-  // הדגשת טכנולוגיות בכותרת משנה
   strong {
     color: #2d3748;
     font-weight: 700;
@@ -65,7 +63,6 @@ $glass-bg: rgba(255, 255, 255, 0.92);
     height: 45px;
     margin-bottom: 1.5rem;
 
-    // הדגשת טכנולוגיות בתיאורי כרטיסיות
     strong {
       color: #2d3748;
       font-weight: 700;
@@ -173,7 +170,6 @@ font-family: Consolas, Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans
   }
 }
 
-// קלאס ברירת המחדל לבועת הזמן
 .time-blob {
   background: #f8fafc;
   padding: 6px 14px;
@@ -184,7 +180,6 @@ font-family: Consolas, Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans
   transition: all 0.2s ease;
 }
 
-// קלאס לבועת הזמן המנצחת
 .winner-blob {
   background: #d1f7f1 !important; // ירוק בהיר מאוד
   color: #006d5b !important; // ירוק כהה
