@@ -1,0 +1,116 @@
+<div class="dashboard-root">
+  <div class="main-content container">
+    
+    <header class="dashboard-header text-center mb-5">
+      <div class="status-badge mb-3" [ngClass]="!data ? 'loading' : (data.mismatchedCount === 0 ? 'success' : 'error')">
+        <span class="pulse-dot"></span>
+        <ng-container *ngIf="!data">Initializing Systems...</ng-container>
+        <ng-container *ngIf="data">
+          {{ data.mismatchedCount === 0 ? 'Data Integrity Verified' : 'Results Mismatch Detected' }}
+        </ng-container>
+      </div>
+      <h1 class="main-title">Multi-Engine Performance Analytics</h1>
+      <p class="sub-title mx-auto text-muted">
+        Comparing calculation efficiency: <strong>SQL Server</strong> Cursors vs. <strong>.NET Core</strong> NCalc vs. <strong>Python</strong> Pandas Vectorization.
+      </p>
+    </header>
+
+    <div class="row g-4 justify-content-center mb-5" *ngIf="data">
+      
+      <div class="col-lg-4">
+        <div class="glass-card metric-item text-center">
+          <h4 class="fw-bold text-purple mb-2">NCalc Engine</h4>
+          <p class="tech-desc small text-muted">
+            In-memory managed processing using <strong>NCalc</strong> to parse and evaluate string formulas at runtime in <strong>.NET Core</strong>.
+          </p>
+          <div class="metric-value-wrapper my-3">
+            <span class="value">{{data.overallAverages.avgCsharp.toFixed(4)}}</span>
+            <span class="unit">s</span>
+          </div>
+          <div class="tech-footer mt-2 pt-2 border-top">
+            <div class="tiny fw-bold">TECH STACK</div>
+            <code class="x-small">C# 12 | NCalc Library | .NET Core</code>
+          </div>
+          <div class="progress-bar-minimal purple"></div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="glass-card metric-item text-center">
+          <h4 class="fw-bold text-primary mb-2">Stored Procedure</h4>
+          <p class="tech-desc small text-muted">
+            Iterative cursor logic with <strong>Dynamic SQL</strong> generation for server-side CASE/WHEN evaluation.
+          </p>
+          <div class="metric-value-wrapper my-3">
+            <span class="value">{{data.overallAverages.avgSql.toFixed(4)}}</span>
+            <span class="unit">s</span>
+          </div>
+          <div class="tech-footer mt-2 pt-2 border-top">
+            <div class="tiny fw-bold">TECH STACK</div>
+            <code class="x-small">T-SQL | Cursor | sp_executesql</code>
+          </div>
+          <div class="progress-bar-minimal blue"></div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="glass-card metric-item text-center">
+          <h4 class="fw-bold text-orange mb-2">Pandas Turbo</h4>
+          <p class="tech-desc small text-muted">
+            High-speed <strong>Vectorization</strong> using <strong>Pandas</strong> eval() with SQLAlchemy & Bulk Insert for massive throughput.
+          </p>
+          <div class="metric-value-wrapper my-3">
+            <span class="value">{{data.overallAverages.avgPython.toFixed(4)}}</span>
+            <span class="unit">s</span>
+          </div>
+          <div class="tech-footer mt-2 pt-2 border-top">
+            <div class="tiny fw-bold">TECH STACK</div>
+            <code class="x-small">Pandas | NumPy | SQLAlchemy</code>
+          </div>
+          <div class="progress-bar-minimal orange"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass-card table-wrapper shadow-lg mb-5" *ngIf="data">
+      <div class="table-header p-4 border-bottom text-center">
+        <h5 class="fw-bold mb-0">Detailed Execution Logs</h5>
+      </div>
+      <div class="table-responsive">
+        <table class="table modern-table mb-0">
+          <thead>
+            <tr>
+              <th class="text-center">EXERCISE NO.</th>
+              <th class="text-center">SQL</th>
+              <th class="text-center">C#</th>
+              <th class="text-center">PYTHON</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of data.tableDetails">
+              <td class="text-center fw-bold text-primary">#{{row.targil_id}}</td>
+              
+              <td class="text-center">
+                <div class="time-blob" [ngClass]="{'winner-blob': row.sqlTime === getLowestTime(row)}">
+                  {{row.sqlTime}}s
+                </div>
+              </td>
+              
+              <td class="text-center">
+                <div class="time-blob" [ngClass]="{'winner-blob': row.csharpTime === getLowestTime(row)}">
+                  {{row.csharpTime}}s
+                </div>
+              </td>
+              
+              <td class="text-center">
+                <div class="time-blob" [ngClass]="{'winner-blob': row.pythonTime === getLowestTime(row)}">
+                  {{row.pythonTime}}s
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

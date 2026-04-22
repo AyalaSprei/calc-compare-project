@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+
+// Variables
+$bg: #f7fafc;
+$white: #ffffff;
+$primary: #4361ee;
+$success: #319795;
+$danger: #e53e3e;
+$gray-muted: #718096;
+$glass-bg: rgba(255, 255, 255, 0.92);
+
+.dashboard-root {
+  background: radial-gradient(circle at top right, #f8faff 0%, #f1f4f9 100%);
+  min-height: 100vh;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  display: flex;
+  justify-content: center;
+  padding: 3rem 0;
+}
+
+.main-content { width: 100%; max-width: 1100px; }
+
+.main-title {
+  font-weight: 800; font-size: 2.8rem; letter-spacing: -1px;
+  background: linear-gradient(90deg, #1a1d23, #4a5568);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+.sub-title { 
+  color: $gray-muted; font-size: 1.1rem; max-width: 600px; 
+  // הדגשת טכנולוגיות בכותרת משנה
+  strong { color: #2d3748; font-weight: 700; }
+}
+
+.glass-card {
+  background: $glass-bg;
+  backdrop-filter: blur(12px);
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.5);
+  transition: all 0.3s ease;
+  &:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+}
+
+.metric-item {
+  padding: 2.5rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+  .tech-desc { height: 45px; margin-bottom: 1.5rem; 
+    // הדגשת טכנולוגיות בתיאורי כרטיסיות
+    strong { color: #2d3748; font-weight: 700; }
+  }
+  .value { font-size: 2.4rem; font-weight: 800; color: #2d3748; }
+  .unit { font-size: 1rem; color: #cbd5e0; margin-left: 4px; }
+}
+
+.tech-footer {
+  .tiny { font-size: 0.65rem; color: #adb5bd; letter-spacing: 1px; margin-bottom: 6px; }
+  code { font-size: 0.8rem; color: #4a5568; background: #f3f5f7; padding: 3px 8px; border-radius: 6px; font-family: 'JetBrains Mono', monospace; }
+}
+
+.status-badge {
+  display: inline-flex; align-items: center; gap: 8px; padding: 8px 20px;
+  border-radius: 100px; font-size: 0.85rem; font-weight: 700;
+  &.success { background: #e6fffa; color: $success; border: 1px solid #b2f5ea; }
+  &.error { background: #fff5f5; color: $danger; border: 1px solid #feb2b2; }
+  &.loading { background: #edf2f7; color: $gray-muted; }
+}
+
+.pulse-dot { width: 8px; height: 8px; background: currentColor; border-radius: 50%; animation: pulse 2s infinite; }
+
+.progress-bar-minimal {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 6px;
+  &.blue { background: $primary; }
+  &.purple { background: #7209b7; }
+  &.orange { background: #ff9f1c; }
+}
+
+.modern-table {
+  thead th { background: #fcfcfd; font-size: 0.75rem; color: $gray-muted; letter-spacing: 1px; padding: 1.5rem; border: none; }
+  tbody td { padding: 1.2rem; border-top: 1px solid #f1f4f8; }
+}
+
+// קלאס ברירת המחדל לבועת הזמן
+.time-blob {
+  background: #f8fafc; padding: 6px 14px; border-radius: 12px;
+  font-family: 'JetBrains Mono', monospace; border: 1px solid #edf2f7; font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+// קלאס לבועת הזמן המנצחת
+.winner-blob {
+  background: #d1f7f1 !important; // ירוק בהיר מאוד
+  color: #006d5b !important; // ירוק כהה
+  font-weight: 700; // טקסט מודגש
+  border-color: #b2f5ea !important; // גבול ירוק מעט כהה יותר
+  box-shadow: 0 4px 10px rgba(49, 151, 149, 0.2); // צל עדין ירוק
+  transform: scale(1.05); // הגדלה קטנה
+}
+
+@keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+

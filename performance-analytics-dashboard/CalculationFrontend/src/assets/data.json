@@ -1,0 +1,36 @@
+{
+    "mismatchedCount": 0,
+    "overallAverages": "{\"avgSql\":1.263380000000000e+001,\"avgCsharp\":8.762483399999999e+000,\"avgPython\":1.438181109428406e+001}",
+    "tableDetails": [
+        {
+            "targil_id": 1,
+            "sqlTime": 1.139000000000000e+001,
+            "csharpTime": 8.018477200000000e+000,
+            "pythonTime": 1.331031465530396e+001
+        },
+        {
+            "targil_id": 2,
+            "sqlTime": 1.474000000000000e+001,
+            "csharpTime": 1.232254690000000e+001,
+            "pythonTime": 1.550455546379089e+001
+        },
+        {
+            "targil_id": 3,
+            "sqlTime": 1.137300000000000e+001,
+            "csharpTime": 7.484867600000000e+000,
+            "pythonTime": 1.559321427345276e+001
+        },
+        {
+            "targil_id": 4,
+            "sqlTime": 1.168300000000000e+001,
+            "csharpTime": 7.960007300000000e+000,
+            "pythonTime": 1.130659389495850e+001
+        },
+        {
+            "targil_id": 5,
+            "sqlTime": 1.398300000000000e+001,
+            "csharpTime": 8.026517999999999e+000,
+            "pythonTime": 1.619437718391419e+001
+        }
+    ]
+}
