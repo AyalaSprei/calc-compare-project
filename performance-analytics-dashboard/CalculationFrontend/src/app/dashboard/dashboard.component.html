@@ -6,7 +6,7 @@
         <span class="pulse-dot"></span>
         <ng-container *ngIf="!data">Initializing Systems...</ng-container>
         <ng-container *ngIf="data">
-          {{ data.mismatchedCount === 0 ? 'Data Integrity Verified' : 'Results Mismatch Detected' }}
+          {{ data.mismatchedCount === 0 ? 'Cross-validation was performed between all engines. A 100% match was found in the calculation results between C#, Python, and SQL.' : 'Results Mismatch Detected' }}
         </ng-container>
       </div>
       <h1 class="main-title">Multi-Engine Performance Analytics</h1>
@@ -74,7 +74,7 @@
 
     <div class="glass-card table-wrapper shadow-lg mb-5" *ngIf="data">
       <div class="table-header p-4 border-bottom text-center">
-        <h5 class="fw-bold mb-0">Detailed Execution Logs</h5>
+        <h5 class="fw-bold mb-2">Detailed Execution Logs</h5>
       </div>
       <div class="table-responsive">
         <table class="table modern-table mb-0">

@@ -19,18 +19,21 @@ namespace DynamicCalcEngine
                     connection.Open();
                     Console.WriteLine("Connection successful. Loading data...");
 
+                    // Load data table (values to calculate on)
                     DataTable dataTable = new DataTable();
                     using (SqlDataAdapter adapter = new SqlDataAdapter("SELECT data_id, a, b, c, d FROM t_data", connection))
                     {
                         adapter.Fill(dataTable);
                     }
 
+                    // Load formulas table
                     DataTable targilTable = new DataTable();
                     using (SqlDataAdapter adapter = new SqlDataAdapter("SELECT targil_id, targil, tnai, targil_false FROM t_targil", connection))
                     {
                         adapter.Fill(targilTable);
                     }
 
+                    // Loop over each formula
                     foreach (DataRow targilRow in targilTable.Rows)
                     {
                         int tId = Convert.ToInt32(targilRow["targil_id"]);
@@ -38,6 +41,7 @@ namespace DynamicCalcEngine
                         string tnai = targilRow["tnai"]?.ToString();
                         string tFalse = targilRow["targil_false"]?.ToString();
 
+                        // Temp table to store results before bulk insert
                         DataTable resultsToInsert = new DataTable();
                         resultsToInsert.Columns.Add("data_id", typeof(int));
                         resultsToInsert.Columns.Add("targil_id", typeof(int));
@@ -47,14 +51,17 @@ namespace DynamicCalcEngine
                         Console.WriteLine($"Calculating Formula {tId}...");
                         Stopwatch sw = Stopwatch.StartNew();
 
+                        // Loop over each data row
                         foreach (DataRow row in dataTable.Rows)
                         {
+                            // Build final expression (with optional condition)
                             string finalExpr = formula;
                             if (!string.IsNullOrEmpty(tnai))
                             {
                                 finalExpr = $"if({tnai}, {formula}, {tFalse})";
                             }
 
+                            // Normalize function names to match NCalc
                             finalExpr = finalExpr.Replace("POWER", "Pow", StringComparison.OrdinalIgnoreCase)
                                                  .Replace("SQRT", "Sqrt", StringComparison.OrdinalIgnoreCase)
                                                  .Replace("ABS", "Abs", StringComparison.OrdinalIgnoreCase)
@@ -62,6 +69,7 @@ namespace DynamicCalcEngine
                                                  .Replace("EXP", "Exp", StringComparison.OrdinalIgnoreCase)
                                                  .Replace("LOG", "Log", StringComparison.OrdinalIgnoreCase);
 
+                            // Create expression and inject parameters
                             Expression e = new Expression(finalExpr);
 
                             e.Parameters["a"] = row["a"];
@@ -71,16 +79,20 @@ namespace DynamicCalcEngine
 
                             try
                             {
+                                // Evaluate expression
                                 double calcResult = Convert.ToDouble(e.Evaluate());
+                                // Add to results table
                                 resultsToInsert.Rows.Add(row["data_id"], tId, "C#", calcResult);
                             }
                             catch (Exception ex)
                             {
+                                // Log error and stop current formula
                                 Console.WriteLine($"Error evaluating formula {tId}: {ex.Message}. Expression: {finalExpr}");
                                 break;
                             }
                         }
 
+                        // Bulk insert results into DB
                         using (SqlBulkCopy bulkCopy = new SqlBulkCopy(connection))
                         {
                             bulkCopy.DestinationTableName = "t_results";
@@ -92,6 +104,7 @@ namespace DynamicCalcEngine
                             bulkCopy.WriteToServer(resultsToInsert);
                         }
 
+                        // Save execution time
                         sw.Stop();
                         double runTime = sw.Elapsed.TotalSeconds;
 
